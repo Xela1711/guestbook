@@ -1,0 +1,10 @@
+-- crée la table messages
+CREATE DATABASE IF NOT EXISTS guestdb CHARACTER SET utf8mb4;
+USE guestdb;
+
+CREATE TABLE IF NOT EXISTS messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

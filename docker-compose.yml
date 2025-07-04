@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mariadb:11
+    container_name: guestbook-db
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql:ro
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: guestdb
+      MYSQL_USER: guestuser
+      MYSQL_PASSWORD: guestuserpwd
+
+  backend:
+    build: ./back
+    container_name: guestbook-back
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_USER: guestuser
+      DB_PASSWORD: guestuserpwd
+      DB_NAME: guestdb
+
+  frontend:
+    build: ./front
+    container_name: guestbook-front
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  db_data: {}

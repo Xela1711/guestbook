@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Guestbook Premium</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>📖 Guestbook</h1>
+    <form @submit.prevent="send">
+      <input v-model="name" placeholder="Votre nom" required />
+      <input v-model="message" placeholder="Votre message" required />
+      <button type="submit">Envoyer</button>
+    </form>
+    <ul>
+      <li v-for="msg in messages" :key="msg.id">
+        <strong>{{ msg.name }} :</strong> {{ msg.message }}
+        <em>— {{ formatDate(msg.created_at) }}</em>
+      </li>
+    </ul>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
