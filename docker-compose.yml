@@ -10,9 +10,11 @@ services:
       MYSQL_DATABASE: guestdb
       MYSQL_USER: guestuser
       MYSQL_PASSWORD: guestuserpwd
+    networks:
+      - guestbook-net
 
   backend:
-    build: ./back
+    image: xela17/guestbook-back:V1.0
     container_name: guestbook-back
     depends_on:
       - db
@@ -23,14 +25,22 @@ services:
       DB_USER: guestuser
       DB_PASSWORD: guestuserpwd
       DB_NAME: guestdb
+    networks:
+      - guestbook-net
 
   frontend:
-    build: ./front
+    image: xela17/guestbook-front:V1.0
     container_name: guestbook-front
     depends_on:
       - backend
     ports:
       - "80:80"
+    networks:
+      - guestbook-net
 
 volumes:
   db_data: {}
+
+networks:
+  guestbook-net:
+    driver: bridge
